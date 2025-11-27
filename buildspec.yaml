@@ -14,11 +14,11 @@ phases:
   build:
     commands:
       - echo "Building vote image"
-      - docker build -t $REPOSITORY_URI:vote-latest -t $REPOSITORY_URI:vote-${CODEBUILD_BUILD_NUMBER} k8s-specifications/
+      - docker build -t $REPOSITORY_URI:vote-latest -t $REPOSITORY_URI:vote-${CODEBUILD_BUILD_NUMBER} vote/
       - echo "Building result image"
-      - docker build -t $REPOSITORY_URI:result-latest -t $REPOSITORY_URI:result-${CODEBUILD_BUILD_NUMBER} k8s-specifications/
+      - docker build -t $REPOSITORY_URI:result-latest -t $REPOSITORY_URI:result-${CODEBUILD_BUILD_NUMBER} result/
       - echo "Building worker image"
-      - docker build -t $REPOSITORY_URI:worker-latest -t $REPOSITORY_URI:worker-${CODEBUILD_BUILD_NUMBER} k8s-specifications/
+      - docker build -t $REPOSITORY_URI:worker-latest -t $REPOSITORY_URI:worker-${CODEBUILD_BUILD_NUMBER} worker/
       
   post_build:
     commands:
