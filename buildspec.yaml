@@ -41,7 +41,7 @@ phases:
 
       - echo "Preparing artifacts for CodeDeploy..."
       - mkdir -p deployment
-      - cp appspec.yml deployment/
+      - cp appspec.yaml deployment/
       - cp -rf k8s-specifications deployment/
 
 artifacts:
