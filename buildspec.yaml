@@ -1,0 +1,33 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 19
+    commands:
+      - echo "Logging into Amazon ECR Public..."
+      - aws --version
+      - aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/k2b2d0w8
+
+  pre_build:
+    commands:
+      - REPOSITORY_URI=public.ecr.aws/k2b2d0w8/simple-voting-app
+
+  build:
+    commands:
+      - echo "Building vote image"
+      - docker build -t $REPOSITORY_URI:vote-latest -t $REPOSITORY_URI:vote-${CODEBUILD_BUILD_NUMBER} k8s-specifications/
+      - echo "Building result image"
+      - docker build -t $REPOSITORY_URI:result-latest -t $REPOSITORY_URI:result-${CODEBUILD_BUILD_NUMBER} k8s-specifications/
+      - echo "Building worker image"
+      - docker build -t $REPOSITORY_URI:worker-latest -t $REPOSITORY_URI:worker-${CODEBUILD_BUILD_NUMBER} k8s-specifications/
+      
+  post_build:
+    commands:
+      - echo "Pushing images to ECR Public..."
+      - docker push $REPOSITORY_URI:vote-latest
+      - docker push $REPOSITORY_URI:vote-${CODEBUILD_BUILD_NUMBER}
+      - docker push $REPOSITORY_URI:result-latest
+      - docker push $REPOSITORY_URI:result-${CODEBUILD_BUILD_NUMBER}
+      - docker push $REPOSITORY_URI:worker-latest
+      - docker push $REPOSITORY_URI:worker-${CODEBUILD_BUILD_NUMBER}
