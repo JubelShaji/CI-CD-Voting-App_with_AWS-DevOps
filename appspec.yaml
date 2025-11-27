@@ -1,0 +1,12 @@
+version: 0.0
+os: linux
+
+files:
+  - source: k8s-specifications/
+    destination: /home/ubuntu/app/k8s-specifications
+
+hooks:
+  ApplicationStart:
+    - run:
+        - echo "Applying Kubernetes manifests..."
+        - kubectl apply -f /home/ubuntu/app/k8s-specifications/
