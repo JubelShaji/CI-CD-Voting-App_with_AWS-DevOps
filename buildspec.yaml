@@ -33,3 +33,17 @@ phases:
       
       - docker push $REPOSITORY_URI:worker-latest
       - docker push $REPOSITORY_URI:worker-${CODEBUILD_BUILD_NUMBER}
+
+      - echo "Editing K8s-specifications"
+      - sed -i 's|jubelshaji/simple_vote_app:vote-latest|jubelshaji/simple_vote_app:vote-${CODEBUILD_BUILD_NUMBER}|g' k8s-specifications/vote-deployment.yaml
+      - sed -i 's|jubelshaji/simple_vote_app:worker-latest|jubelshaji/simple_vote_app:worker-${CODEBUILD_BUILD_NUMBER}|g' k8s-specifications/worker-deployment.yaml
+      - sed -i 's|jubelshaji/simple_vote_app:result-latest|jubelshaji/simple_vote_app:result-${CODEBUILD_BUILD_NUMBER}|g' k8s-specifications/result-deployment.yaml
+
+      - echo "Preparing artifacts for CodeDeploy..."
+      - mkdir -p deployment
+      - cp appspec.yml deployment/
+      - cp -rf k8s-specifications deployment/
+
+artifacts:
+  files:
+    - deployment/**/*
