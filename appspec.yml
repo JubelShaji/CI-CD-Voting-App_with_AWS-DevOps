@@ -7,6 +7,6 @@ files:
 
 hooks:
   ApplicationStart:
-    - run:
-        - echo "Applying Kubernetes manifests..."
-        - kubectl apply -f /home/ubuntu/app/k8s-specifications/
+    - location: scripts/apply.sh
+      timeout: 400
+      runas: root
