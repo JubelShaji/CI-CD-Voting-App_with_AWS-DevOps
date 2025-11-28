@@ -9,4 +9,4 @@ hooks:
   ApplicationStart:
     - location: scripts/apply.sh
       timeout: 400
-      runas: root
+      runas: ubuntu
