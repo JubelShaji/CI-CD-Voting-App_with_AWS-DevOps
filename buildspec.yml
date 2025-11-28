@@ -38,9 +38,9 @@ phases:
       - chmod +x scripts/apply.sh
 
       - echo "Editing K8s-specifications"
-      - sed -i 's|jubelshaji/simple_vote_app:vote-latest|jubelshaji/simple_vote_app:vote-${CODEBUILD_BUILD_NUMBER}|g' k8s-specifications/vote-deployment.yaml
-      - sed -i 's|jubelshaji/simple_vote_app:worker-latest|jubelshaji/simple_vote_app:worker-${CODEBUILD_BUILD_NUMBER}|g' k8s-specifications/worker-deployment.yaml
-      - sed -i 's|jubelshaji/simple_vote_app:result-latest|jubelshaji/simple_vote_app:result-${CODEBUILD_BUILD_NUMBER}|g' k8s-specifications/result-deployment.yaml
+      - sed -i "s|jubelshaji/simple_vote_app:vote-latest|$REPOSITORY_URI:vote-${CODEBUILD_BUILD_NUMBER}|g" k8s-specifications/vote-deployment.yaml
+      - sed -i "s|jubelshaji/simple_vote_app:worker-latest|$REPOSITORY_URI:worker-${CODEBUILD_BUILD_NUMBER}|g" k8s-specifications/worker-deployment.yaml
+      - sed -i "s|jubelshaji/simple_vote_app:result-latest|$REPOSITORY_URI:result-${CODEBUILD_BUILD_NUMBER}|g" k8s-specifications/result-deployment.yaml
 
 artifacts:
   files:
