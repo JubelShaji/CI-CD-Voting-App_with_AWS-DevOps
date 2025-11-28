@@ -39,11 +39,7 @@ phases:
       - sed -i 's|jubelshaji/simple_vote_app:worker-latest|jubelshaji/simple_vote_app:worker-${CODEBUILD_BUILD_NUMBER}|g' k8s-specifications/worker-deployment.yaml
       - sed -i 's|jubelshaji/simple_vote_app:result-latest|jubelshaji/simple_vote_app:result-${CODEBUILD_BUILD_NUMBER}|g' k8s-specifications/result-deployment.yaml
 
-      - echo "Preparing artifacts for CodeDeploy..."
-      - mkdir -p deployment
-      - cp appspec.yaml deployment/
-      - cp -rf k8s-specifications deployment/
-
 artifacts:
   files:
-    - deployment/**/*
+    - appspec.yaml
+    - k8s-specifications/**/*
